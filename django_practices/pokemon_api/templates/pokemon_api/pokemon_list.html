@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokémon API</title>
+</head>
+<body>
+    <h1>Первые 20 покемонов</h1>
+
+    <ol>
+        {% for pokemon in pokemons %}
+            <li>{{ pokemon.name }}</li>
+        {% endfor %}
+    </ol>
+
+    <h2>Поиск покемона</h2>
+
+    <form method="get">
+        <label for="name">Имя покемона:</label>
+
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Например, pikachu"
+            required
+        >
+
+        <button type="submit">Найти</button>
+    </form>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    {% if pokemon_info %}
+        <h2>Информация о покемоне</h2>
+
+        <p>Имя: {{ pokemon_info.name }}</p>
+
+        <p>
+            Тип:
+            {% for type in pokemon_info.types %}
+                {{ type }}
+            {% endfor %}
+        </p>
+
+        <p>Вес: {{ pokemon_info.weight }} hg</p>
+        <p>Рост: {{ pokemon_info.height }} dm</p>
+
+        <p>
+            Способности:
+            {% for ability in pokemon_info.abilities %}
+                {{ ability }}
+            {% endfor %}
+        </p>
+    {% endif %}
+</body>
+</html>

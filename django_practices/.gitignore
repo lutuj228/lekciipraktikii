@@ -1,0 +1,41 @@
+
+# Виртуальное окружение
+venv/
+.venv/
+env/
+
+# Кеш Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# База данных Django
+db.sqlite3
+db.sqlite3-journal
+
+# Секреты и переменные окружения
+.env
+.env.*
+!.env.example
+
+# Логи
+*.log
+
+# Статические файлы после collectstatic
+staticfiles/
+
+# Загруженные пользователями файлы
+media/
+
+# Кеш тестирования
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Настройки редакторов
+.vscode/
+.idea/
+
+# Системные файлы
+.DS_Store
+Thumbs.db

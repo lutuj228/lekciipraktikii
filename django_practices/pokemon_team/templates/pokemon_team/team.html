@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokémon Team</title>
+</head>
+<body>
+    <h1>Моя команда покемонов</h1>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    <h2>Добавить покемона</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add">
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Например, pikachu"
+            required
+        >
+
+        <button type="submit">Добавить</button>
+    </form>
+
+    <h2>Поиск покемона</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="search">
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Имя покемона"
+            required
+        >
+
+        <button type="submit">Найти</button>
+    </form>
+
+    {% if search_result %}
+        <h3>{{ search_result.name }}</h3>
+
+        {% if search_result.image %}
+            <img src="{{ search_result.image }}" alt="Покемон">
+        {% endif %}
+
+        <p>HP: {{ search_result.hp }}</p>
+        <p>Атака: {{ search_result.attack }}</p>
+        <p>Защита: {{ search_result.defense }}</p>
+    {% endif %}
+
+    <h2>Состав команды</h2>
+
+    {% for pokemon in pokemons %}
+        <div>
+            <h3>{{ pokemon.name }}</h3>
+
+            {% if pokemon.image %}
+                <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}">
+            {% endif %}
+
+            <p>Рост: {{ pokemon.height }} dm</p>
+            <p>Вес: {{ pokemon.weight }} hg</p>
+
+            <p>
+                Типы:
+                {% for type in pokemon.types %}
+                    {{ type }}
+                {% endfor %}
+            </p>
+
+            <p>
+                Способности:
+                {% for ability in pokemon.abilities %}
+                    {{ ability }}
+                {% endfor %}
+            </p>
+
+            <p>HP: {{ pokemon.hp }}</p>
+            <p>Атака: {{ pokemon.attack }}</p>
+            <p>Защита: {{ pokemon.defense }}</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="remove">
+                <input
+                    type="hidden"
+                    name="name"
+                    value="{{ pokemon.name }}"
+                >
+
+                <button type="submit">Удалить</button>
+            </form>
+        </div>
+        <hr>
+    {% empty %}
+        <p>Команда пока пустая.</p>
+    {% endfor %}
+
+    <h2>Тренировочный бой</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="battle">
+
+        <label for="first">Первый покемон:</label>
+        <select name="first" id="first">
+            {% for pokemon in pokemons %}
+                <option value="{{ pokemon.name }}">
+                    {{ pokemon.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="second">Второй покемон:</label>
+        <select name="second" id="second">
+            {% for pokemon in pokemons %}
+                <option value="{{ pokemon.name }}">
+                    {{ pokemon.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Начать бой</button>
+    </form>
+
+    {% if battle_result %}
+        <h3>Результат боя</h3>
+
+        <p>
+            {{ battle_result.first }}:
+            {{ battle_result.score_1 }} очков
+        </p>
+
+        <p>
+            {{ battle_result.second }}:
+            {{ battle_result.score_2 }} очков
+        </p>
+
+        <h3>Победитель: {{ battle_result.winner }}</h3>
+    {% endif %}
+</body>
+</html>
