@@ -1,0 +1,27 @@
+
+{% extends 'catalog/base.html' %}
+
+{% block title %}
+    Список книг
+{% endblock %}
+
+{% block content %}
+    <h2>Список книг</h2>
+
+    <ul>
+        {% for book in books %}
+            <li>
+                <h3>{{ book.title }}</h3>
+                <p>Автор: {{ book.author }}</p>
+                <p>Год издания: {{ book.year }}</p>
+
+                <a href="{% url 'book_detail' book.id %}"
+                   class="book-button">
+                    Информация о книге
+                </a>
+            </li>
+        {% empty %}
+            <li>Книг пока нет.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

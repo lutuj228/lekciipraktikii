@@ -6,7 +6,8 @@ def book_detail(request):
         'title': 'Мастер и Маргарита',
         'author': 'Михаил Булгаков',
         'year': 1967,
-        'description': 'Роман о любви, добре и зле.'
+        'description': 'Роман о любви, добре и зле.',
+        'price': 1200
     }
 
     return render(request, 'catalog/book_detail.html', {

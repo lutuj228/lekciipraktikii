@@ -1,14 +1,23 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Информация о книге</title>
-</head>
-<body>
-    <h1>{{ book.title }}</h1>
+
+{% extends 'catalog/base.html' %}
+{% load custom_filters %}
+
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+
+{% block content %}
+    <h2>{{ book.title }}</h2>
 
     <p>Автор: {{ book.author }}</p>
     <p>Год издания: {{ book.year }}</p>
     <p>Описание: {{ book.description }}</p>
-</body>
-</html>
+
+    <p class="price">
+        Цена: {{ book.price|format_currency }}
+    </p>
+
+    <a href="{% url 'book_list' %}" class="book-button">
+        Вернуться к списку книг
+    </a>
+{% endblock %}
